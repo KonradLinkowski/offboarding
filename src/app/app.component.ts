@@ -11,8 +11,4 @@ import { EmployeesService } from './employees.service';
 export class AppComponent {
   title = 'offboarding';
   employeesService = inject(EmployeesService);
-
-  ngOnInit() {
-    this.employeesService.list().subscribe(console.log);
-  }
 }

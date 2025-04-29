@@ -7,14 +7,14 @@ export class EmployeesService {
   private http = inject(HttpClient);
 
   list() {
-    return this.http.get('/employees');
+    return this.http.get<Employee[]>('/employees');
   }
 
   get(id: string) {
-    return this.http.get(`/employees/${id}`);
+    return this.http.get<Employee>(`/employees/${id}`);
   }
 
   post(id: string, data: Omit<Employee, 'id'>) {
-    return this.http.post(`/users/${id}/offboard`, data);
+    return this.http.post<Employee>(`/users/${id}/offboard`, data);
   }
 }

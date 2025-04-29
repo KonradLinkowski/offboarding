@@ -9,5 +9,5 @@ export type Employee = {
   department: string;
   status: string;
   email: string;
-  equipment: Equipment[];
+  equipments: Equipment[];
 };

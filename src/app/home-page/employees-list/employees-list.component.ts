@@ -1,27 +1,93 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatTableModule, MatTable } from '@angular/material/table';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  viewChild,
+  ViewChild,
+} from '@angular/core';
+import {
+  MatTableModule,
+  MatTable,
+  MatTableDataSource,
+} from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
-import { ListDataSource, ListItem } from './employees-list-datasource';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { Employee } from '../../types';
+import { Router } from '@angular/router';
+
+type Column = {
+  id: string;
+  label: string;
+  accessor: keyof Employee | ((row: Employee) => string);
+};
 
 @Component({
   selector: 'app-employees-list',
   templateUrl: './employees-list.component.html',
   styleUrl: './employees-list.component.scss',
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule],
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
 })
-export class EmployeeListComponent implements AfterViewInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<ListItem>;
-  dataSource = new ListDataSource();
+export class EmployeeListComponent {
+  private readonly router = inject(Router);
+  employees = input.required<Employee[]>();
+  paginator = viewChild.required(MatPaginator);
+  sort = viewChild.required(MatSort);
+  table = viewChild.required(MatTable);
+  dataSource = computed(() => new MatTableDataSource(this.employees()));
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+  columns: Column[] = [
+    { id: 'name', label: 'Name', accessor: 'name' },
+    { id: 'email', label: 'Email', accessor: 'email' },
+    { id: 'department', label: 'Department', accessor: 'department' },
+    {
+      id: 'equipment',
+      label: 'Equipment',
+      accessor: (row) => row.equipments.map((eq) => eq.name).join(''),
+    },
+    { id: 'status', label: 'Status', accessor: 'status' },
+  ];
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+  displayedColumns = this.columns.map((c) => c.id);
+
+  constructor() {
+    effect(() => {
+      const dataSource = this.dataSource();
+      dataSource.sort = this.sort();
+      dataSource.paginator = this.paginator();
+      this.table().dataSource = dataSource;
+    });
+  }
+
+  handleClick(id: string) {
+    this.router.navigate(['employee', id]);
+  }
+
+  getCell(col: Column, row: Employee) {
+    if (typeof col.accessor === 'string') {
+      return row[col.accessor];
+    }
+    return col.accessor(row);
+  }
+
+  applyFilter(event: Event) {
+    const dataSource = this.dataSource();
+    const filterValue = (event.target as HTMLInputElement).value;
+    dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (dataSource.paginator) {
+      dataSource.paginator.firstPage();
+    }
   }
 }

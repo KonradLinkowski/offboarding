@@ -16,3 +16,14 @@ body {
     )
   );
 }
+
+html {
+  @include mat.theme-overrides(
+    (
+      primary: #ff9800,
+      primary-container: #001e2c,
+      secondary: #f2f2f2,
+      on-primary-container: #dbe3eb,
+    )
+  );
+}

@@ -15,6 +15,6 @@ export class EmployeesService {
   }
 
   post(id: string, data: Omit<Employee, 'id'>) {
-    return this.http.post<Employee>(`/users/${id}/offboard`, data);
+    return this.http.post<Employee>(`/employees/${id}/offboard`, data);
   }
 }

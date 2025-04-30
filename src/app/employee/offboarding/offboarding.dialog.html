@@ -1,6 +1,28 @@
-<h2 mat-dialog-title>Delete file</h2>
-<mat-dialog-content> Would you like to delete cat.jpeg? </mat-dialog-content>
+<h2 mat-dialog-title>Offboarding</h2>
+<mat-dialog-content>
+  <form [formGroup]="offboardingForm" class="form">
+    @for (field of fields; track field.id) {
+    <mat-form-field appearance="outline">
+      <mat-label>{{field.label}}</mat-label>
+      @if (field.textarea) {
+      <textarea matInput [formControlName]="field.id"></textarea>
+      } @else {
+      <input matInput [formControlName]="field.id" />
+      }
+      <mat-error>
+        <app-error-message [field]="field.id"></app-error-message>
+      </mat-error>
+    </mat-form-field>
+    }
+  </form>
+</mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>No</button>
-  <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
+  <button
+    mat-flat-button
+    [mat-dialog-close]="offboardingForm.value"
+    [disabled]="!offboardingForm.valid"
+  >
+    Confirm
+  </button>
 </mat-dialog-actions>

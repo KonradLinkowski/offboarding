@@ -13,6 +13,6 @@ export const routes: Routes = [
   {
     path: 'employee/:id',
     component: EmployeeComponent,
-    resolve: { employees: EmployeeResolver },
+    resolve: { employee: EmployeeResolver },
   },
 ];

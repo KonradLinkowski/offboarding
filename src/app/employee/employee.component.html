@@ -1,19 +1,42 @@
-<h1>Glora Rice</h1>
-<button mat-raised-button (click)="openDialog('0ms', '0ms')">Offboard</button>
-Employee details
-<mat-divider></mat-divider>
-<dl>
-  <dt>Full name</dt>
-  <dd>Gloria Rice</dd>
-</dl>
-<dl>
-  <dt>Department</dt>
-  <dd>Engineering</dd>
-</dl>
+@let emp = employee();
 
-<dl>
-  <dt>Email</dt>
-  <dd>gloria&#64;tequipy.com</dd>
-</dl>
+<button mat-button routerLink="/">
+  <mat-icon fontIcon="chevron_left"></mat-icon> Back
+</button>
 
-Equipment
+<div class="header">
+  <h1>{{ emp.name }}</h1>
+  <button mat-flat-button (click)="openDialog('0ms', '0ms')">Offboard</button>
+</div>
+
+<section class="section" aria-labelledby="employee-details">
+  <h2 class="header" id="employee-details">Employee details</h2>
+  <dl>
+    <dt>Full name</dt>
+    <dd>{{ emp.name }}</dd>
+  </dl>
+  <dl>
+    <dt>Department</dt>
+    <dd>{{ emp.department }}</dd>
+  </dl>
+
+  <dl>
+    <dt>Email</dt>
+    <dd>{{ emp.email }}</dd>
+  </dl>
+</section>
+
+<section class="section" aria-labelledby="equipment">
+  <h2 class="header" id="equipment">Equipment</h2>
+  <table mat-table matSort aria-label="Elements" [dataSource]="emp.equipments">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Item</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.name }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['name']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['name']"></tr>
+  </table>
+</section>

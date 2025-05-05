@@ -1,0 +1,16 @@
+:host {
+  display: block;
+  margin: 2rem 4rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section {
+  .header {
+    border-bottom: 2px solid var(--mat-sys-primary);
+  }
+}

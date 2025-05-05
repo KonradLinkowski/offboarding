@@ -1,7 +1,7 @@
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { Employee } from '../types';
+import { Employee } from './types';
 import { inject, Injectable } from '@angular/core';
-import { EmployeesService } from '../employees.service';
+import { EmployeesService } from './employees.service';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

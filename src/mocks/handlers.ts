@@ -23,6 +23,23 @@ export const handlers = [
           },
         ],
       },
+      {
+        id: 'vvv1321',
+        name: 'Gloria Rice',
+        department: 'Engineering',
+        status: 'ACTIVE',
+        email: 'gloaria@tequipy.com',
+        equipments: [
+          {
+            id: 'aaa123456',
+            name: 'Macbook Pro 16',
+          },
+          {
+            id: 'aaa123456',
+            name: 'Apple Magic Mouse',
+          },
+        ],
+      },
     ]);
   }),
   http.get(api('/employees/:id'), () => {

@@ -1,13 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  computed,
-  effect,
-  inject,
-  input,
-  viewChild,
-  ViewChild,
-} from '@angular/core';
+import { Component, computed, effect, inject, viewChild } from '@angular/core';
 import {
   MatTableModule,
   MatTable,
@@ -17,8 +8,11 @@ import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Employee } from '../../types';
-import { Router } from '@angular/router';
+import { Employee } from '../types';
+import { ActivatedRoute, Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 
 type Column = {
   id: string;
@@ -36,11 +30,16 @@ type Column = {
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
   ],
 })
 export class EmployeeListComponent {
   private readonly router = inject(Router);
-  employees = input.required<Employee[]>();
+  private activatedRoute = inject(ActivatedRoute);
+  employees = toSignal(
+    this.activatedRoute.data.pipe(map((v) => v['employees'] as Employee[])),
+    { initialValue: [] },
+  );
   paginator = viewChild.required(MatPaginator);
   sort = viewChild.required(MatSort);
   table = viewChild.required(MatTable);

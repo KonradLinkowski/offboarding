@@ -14,3 +14,21 @@
     border-bottom: 2px solid var(--mat-sys-primary);
   }
 }
+
+.header-row {
+  th {
+    background-color: lightgray;
+    border: none;
+    border-radius: 0.5rem;
+  }
+}
+
+.info {
+  display: flex;
+  column-gap: 50rem;
+  flex-wrap: wrap;
+
+  &__item {
+    display: flex;
+  }
+}

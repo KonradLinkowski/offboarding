@@ -11,19 +11,20 @@
 
 <section class="section" aria-labelledby="employee-details">
   <h2 class="header" id="employee-details">Employee details</h2>
-  <dl>
-    <dt>Full name</dt>
-    <dd>{{ emp.name }}</dd>
-  </dl>
-  <dl>
-    <dt>Department</dt>
-    <dd>{{ emp.department }}</dd>
-  </dl>
-
-  <dl>
-    <dt>Email</dt>
-    <dd>{{ emp.email }}</dd>
-  </dl>
+  <div class="info">
+    <dl class="info__item">
+      <dt>Full name</dt>
+      <dd>{{ emp.name }}</dd>
+    </dl>
+    <dl class="info__item">
+      <dt>Email</dt>
+      <dd>{{ emp.email }}</dd>
+    </dl>
+    <dl class="info__item">
+      <dt>Department</dt>
+      <dd>{{ emp.department }}</dd>
+    </dl>
+  </div>
 </section>
 
 <section class="section" aria-labelledby="equipment">
@@ -36,7 +37,7 @@
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="['name']"></tr>
+    <tr class="header-row" mat-header-row *matHeaderRowDef="['name']"></tr>
     <tr mat-row *matRowDef="let row; columns: ['name']"></tr>
   </table>
 </section>

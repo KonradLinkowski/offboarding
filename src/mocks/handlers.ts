@@ -1,10 +1,9 @@
 import { http, HttpResponse } from 'msw';
 
 // https://github.com/mswjs/msw/issues/397#issuecomment-751230924
-const api = (path: string) => new URL(path, 'http://localhost:4200').toString();
 
 export const handlers = [
-  http.get(api('/employees'), () => {
+  http.get('/employees', () => {
     return HttpResponse.json([
       {
         id: 'vvv1323',
@@ -42,7 +41,7 @@ export const handlers = [
       },
     ]);
   }),
-  http.get(api('/employees/:id'), () => {
+  http.get('/employees/:id', () => {
     return HttpResponse.json({
       id: 'vvv1323',
       name: 'John Doe',
@@ -61,7 +60,7 @@ export const handlers = [
       ],
     });
   }),
-  http.post(api('/employees/:id/offboard'), () => {
+  http.post('/employees/:id/offboard', () => {
     return HttpResponse.json({
       address: {
         streetLine1: 'Kocmyrzowska 1',

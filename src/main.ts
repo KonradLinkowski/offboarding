@@ -5,7 +5,11 @@ import { AppComponent } from './app/app.component';
 (async () => {
   const { worker } = await import('./mocks/browser');
 
-  await worker.start();
+  await worker.start({
+    serviceWorker: {
+      url: './mockServiceWorker.js',
+    },
+  });
 
   await bootstrapApplication(AppComponent, appConfig);
 })().catch(console.error);
